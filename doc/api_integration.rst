@@ -34,13 +34,13 @@ Connection
 
         .. code-block:: python
 
-            import xmlrpclib
-            info = xmlrpclib.ServerProxy('https://demo.odoo.com/start').start()
+            from xmlrpc import client
+            info = client.ServerProxy('https://demo.odoo.com/start').start()
             url, db, username, password = \
                 info['host'], info['database'], info['user'], info['password']
-            common = xmlrpclib.ServerProxy('{}/xmlrpc/2/common'.format(url))
+            common = client.ServerProxy('{}/xmlrpc/2/common'.format(url))
             uid = common.authenticate(db, username, password, {})
-            models = xmlrpclib.ServerProxy('{}/xmlrpc/2/object'.format(url))
+            models = client.ServerProxy('{}/xmlrpc/2/object'.format(url))
 
         .. code-block:: ruby
 
@@ -158,8 +158,8 @@ database:
 
     .. code-block:: python
 
-        import xmlrpclib
-        info = xmlrpclib.ServerProxy('https://demo.odoo.com/start').start()
+        from xmlrpc import client
+        info = client.ServerProxy('https://demo.odoo.com/start').start()
         url, db, username, password = \
             info['host'], info['database'], info['user'], info['password']
 
@@ -236,7 +236,7 @@ the login.
 
     .. code-block:: python
 
-        common = xmlrpclib.ServerProxy('{}/xmlrpc/2/common'.format(url))
+        common = client.ServerProxy('{}/xmlrpc/2/common'.format(url))
         common.version()
 
     .. code-block:: ruby
@@ -318,7 +318,7 @@ Each call to ``execute_kw`` takes the following parameters:
 
         .. code-block:: python
 
-            models = xmlrpclib.ServerProxy('{}/xmlrpc/2/object'.format(url))
+            models = client.ServerProxy('{}/xmlrpc/2/object'.format(url))
             models.execute_kw(db, uid, password,
                 'res.partner', 'check_access_rights',
                 ['read'], {'raise_exception': False})
@@ -1445,7 +1445,7 @@ Reports can be printed over RPC with the following information:
             invoice_ids = models.execute_kw(
                 db, uid, password, 'account.invoice', 'search',
                 [[('type', '=', 'out_invoice'), ('state', '=', 'open')]])
-            report = xmlrpclib.ServerProxy('{}/xmlrpc/2/report'.format(url))
+            report = client.ServerProxy('{}/xmlrpc/2/report'.format(url))
             result = report.render_report(
                 db, uid, password, 'account.report_invoice', invoice_ids)
             report_data = result['result'].decode('base64')
